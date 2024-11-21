@@ -34,3 +34,23 @@ def is_prime(number):
             if number % i == 0:
                 return False
         return True
+
+def primes_in_range(start, end):
+    def is_prime(number):
+        if not isinstance(number, int) or number <= 0:
+            raise ValueError("Input must be an integer")
+        else:
+            if number < 2:
+                return False
+            for i in range(2, int(number ** 0.5) + 1):
+                if number % i == 0:
+                    return False
+            return True
+
+    if not isinstance(start, int) or not isinstance(end, int):
+        raise ValueError("Both start and end must be integers.")
+    if start > end:
+        raise ValueError("Start must be less than or equal to end.")
+
+    # Generate and return the list of primes
+    return [num for num in range(start, end + 1) if is_prime(num)]
