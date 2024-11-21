@@ -25,19 +25,12 @@ def celsius_to_fahrenheit(celsius):
 
 
 def is_prime(number):
-    if not isinstance(number, int) or number == 0:
-        raise ValueError("Input must be an integer.")
-    if number <= 1:  # Numbers less than or equal to 1 are not prime
-        return False
-    if number <= 3:  # 2 and 3 are prime numbers
-        return True
-    if number % 2 == 0 or number % 3 == 0:  # Eliminate multiples of 2 and 3
-        return False
-    
-    # Check divisors from 5 to √number
-    i = 5
-    while i * i <= number:
-        if number % i == 0 or number % (i + 2) == 0:
+    if not isinstance(number, int) or number <= 0:
+        raise ValueError("Input must be an integer")
+    else:
+        if number < 2:
             return False
-        i += 6
-    return True
+        for i in range(2, int(number ** 0.5) + 1):
+            if number % i == 0:
+                return False
+        return True
