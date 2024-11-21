@@ -25,19 +25,7 @@ def celsius_to_fahrenheit(celsius):
 
 
 def is_prime(number):
-    """
-    Check if a number is prime.
-    
-    Parameters:
-    number (int): The number to check.
-    
-    Returns:
-    bool: True if the number is prime, False otherwise.
-    
-    Raises:
-    ValueError: If the input is not a positive integer.
-    """
-    if not isinstance(number, int):
+    if not isinstance(number, int) or number == 0:
         raise ValueError("Input must be an integer.")
     if number <= 1:  # Numbers less than or equal to 1 are not prime
         return False
