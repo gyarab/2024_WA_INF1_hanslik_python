@@ -53,4 +53,7 @@ def primes_in_range(start, end):
         raise ValueError("Start must be less than or equal to end.")
 
     # Generate and return the list of primes
-    return [num for num in range(start, end + 1) if is_prime(num)]
+    try:
+        return [num for num in range(start, end + 1) if is_prime(num)]
+    except:
+        raise ValueError()
