@@ -10,9 +10,15 @@ def fibonacci(n):
     return b
 
 def fahrenheit_to_celsius(fahrenheit):
-    celsius = (fahrenheit - 32) * 5 / 9
-    return celsius
+    try:
+        celsius = (fahrenheit - 32) * 5 / 9
+        return celsius
+    except:
+        raise(ValueError)
 
 def celsius_to_fahrenheit(celsius):
-    fahrenheit = (celsius * 9 / 5) + 32
-    return fahrenheit
+    try:
+        fahrenheit = (celsius * 9 / 5) + 32
+        return fahrenheit
+    except:
+        raise(ValueError)
