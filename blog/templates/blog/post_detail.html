@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">{{ post.title }}</h1>
+    
+    <p class="text-center">
+        By 
+        {% for author in post.authors.all %}
+            <strong><a href="{% url 'blog-author-posts' author_id=author.id %}">{{ author.name }}</a></strong>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        on {{ post.date_posted|date:"F d, Y" }}
+    </p>
+    
+    <!-- Custom styling for image position and size -->
+    {% if post.image %}
+        <div class="post-image-container text-center">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image mb-4">
+        </div>
+    {% endif %}
+    
+    <div class="content">
+        <p>{{ post.content }}</p>
+        
+        {% if post.video_url %}
+            <p><a href="{{ post.video_url }}" target="_blank" class="btn btn-danger">Watch Explanation Video</a></p>
+        {% endif %}
+    </div>
+    
+    <a href="{% url 'blog-home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+
+{% endblock content %}
