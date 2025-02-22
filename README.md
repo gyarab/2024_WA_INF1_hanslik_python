@@ -19,7 +19,6 @@ pip install -r requirements.txt
 ```
 ### 4.Načtení databáze
 ```bash
-cd CScms
 python manage.py migrate
 python manage.py loaddata blog/fixtures/blog
 ```
