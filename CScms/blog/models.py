@@ -9,7 +9,6 @@ class Category(models.Model):
         return self.name
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     bio = models.TextField(null=True, blank=True)
     photo = models.ImageField(upload_to='author_photos/', null=True, blank=True)

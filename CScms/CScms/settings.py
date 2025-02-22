@@ -24,10 +24,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-FIXTURE_DIRS = [
-    BASE_DIR / "blog/fixtures/",
-]
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
