@@ -1,0 +1,18 @@
+<header class="bg-primary text-white py-3 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1 class="h3 mb-0"><a href="{% url 'blog-home' %}" class="text-white">Cybersecurity Blog</a></h1>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'blog-home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'blog-about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'admin:index' %}">Log in</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
