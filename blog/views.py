@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Post, Category, Author
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Category, Author, Comment
+from .forms import CommentForm
 
 def home(request):
     category_id = request.GET.get('category')  # Get category ID from request
@@ -29,8 +30,26 @@ def about(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = Comment(
+                name=form.cleaned_data['name'],
+                text=form.cleaned_data['text'],
+                article=post
+            )
+            
+            new_comment.ip = request.META.get('REMOTE_ADDR')
+            new_comment.user_agent = request.META.get('HTTP_USER_AGENT')
+                
+            new_comment.save()
+            return redirect('blog-post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    
     context = {
         'post': post,
+        'form': form,
     }
     
     return render(request, 'blog/post_detail.html', context)

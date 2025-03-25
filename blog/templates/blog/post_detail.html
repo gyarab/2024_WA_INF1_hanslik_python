@@ -28,6 +28,48 @@
     </div>
     
     <a href="{% url 'blog-home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+    
+    <!-- Comments Section -->
+    <div class="comments-section mt-5">
+        <h3 class="mb-4 border-bottom pb-2">Comments</h3>
+        
+        <!-- Comment Form -->
+        <div class="comment-form-container mb-5">
+            <h4 class="mb-3">Leave a Comment</h4>
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="id_name" class="form-label">Your Name</label>
+                    <input type="text" name="name" maxlength="100" class="form-control" required id="id_name">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="id_text" class="form-label">Your Comment</label>
+                    <textarea name="text" cols="40" rows="5" class="form-control" required id="id_text"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+        </div>
+        
+        <!-- Display existing comments -->
+        <h4 class="mb-3">Previous Comments</h4>
+        {% if post.comments.all %}
+            <div class="existing-comments">
+                {% for comment in post.comments.all %}
+                    <div class="comment card mb-3">
+                        <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                            <strong>{{ comment.name }}</strong>
+                            <small class="text-muted">{{ comment.time|date:"F d, Y - H:i" }}</small>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ comment.text }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </div>
 </div>
 
 {% endblock content %}
