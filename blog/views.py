@@ -1,3 +1,5 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Category, Author, Comment
 from .forms import CommentForm
@@ -29,29 +31,30 @@ def about(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = Comment(
-                name=form.cleaned_data['name'],
-                text=form.cleaned_data['text'],
-                article=post
-            )
-            
-            new_comment.ip = request.META.get('REMOTE_ADDR')
-            new_comment.user_agent = request.META.get('HTTP_USER_AGENT')
-                
-            new_comment.save()
-            return redirect('blog-post-detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    
+
+    form = None
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            print("User is authenticated and the reqeuest method is POST.")
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                new_comment = Comment(
+                    name=request.user.username,
+                    text=form.cleaned_data['text'],
+                    article=post
+                )
+                new_comment.ip = request.META.get('REMOTE_ADDR')
+                new_comment.user_agent = request.META.get('HTTP_USER_AGENT')
+                new_comment.save()
+                print("Komentář byl úspěšně přidán.")
+                return redirect('blog-post-detail', pk=post.pk)
+        else:
+            form = CommentForm()
+
     context = {
         'post': post,
         'form': form,
     }
-    
     return render(request, 'blog/post_detail.html', context)
 
 def author_posts(request, author_id):
@@ -64,3 +67,13 @@ def author_posts(request, author_id):
     }
 
     return render(request, 'blog/author_posts.html', context)
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'blog/register.html', {'form': form})
