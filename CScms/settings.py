@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-0$&5is+5+cd5$l&*%at(1#%#kmegtx(ac&5@jo%sv)=37%iqov
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["csblog.svs.gyarab.cz"]
 
 if (os.path.exists(".env")):
     load_dotenv()
